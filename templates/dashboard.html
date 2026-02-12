@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard - GitHub Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <h1>GitHub Portfolio Analyzer Dashboard</h1>
+
+        <!-- Input Card -->
+        <div class="card">
+            <form method="post" action="/analyze">
+                <input type="text" name="github_username" placeholder="Enter GitHub Username (e.g. torvalds)" required>
+                <button type="submit">Analyze Profile</button>
+            </form>
+        </div>
+
+        {% if error %}
+        <div class="card" style="color:#ff6b6b;">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if result %}
+        <!-- Score Card -->
+        <div class="card">
+            <h2>Portfolio Score: {{ result.total_score }}/100</h2>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" style="width: {{ result.total_score }}%;">
+                    <span class="progress-text">
+                        {{ result.total_score }}%
+                    </span>
+                </div>
+            </div>
+
+            <h3>Score Breakdown</h3>
+            <ul>
+                {% for key, value in result.breakdown.items() %}
+                <li><strong>{{ key }}</strong> : {{ value }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Radar Chart -->
+            <div class="chart-container">
+                <canvas id="scoreChart"></canvas>
+            </div>
+            
+        </div>
+
+        <!-- AI Feedback -->
+        <div class="card">
+            <h3>AI Recruiter Evaluation</h3>
+            <div>
+                {{ ai_feedback | safe }}
+            </div>
+        </div>
+
+        <!-- Chart Script -->
+        <script>
+            const ctx = document.getElementById('scoreChart');
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        {% for key in result.breakdown.keys() %}
+                            "{{ key }}",
+                        {% endfor %}
+                    ],
+                datasets: [{
+                    label: 'Portfolio Analysis',
+                    data: [
+                        {% for value in result.breakdown.values() %}
+                                {{ value }},
+                {% endfor %}
+            ],
+                fill: true,
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                borderColor: '#3b82f6',
+                pointBackgroundColor: '#3b82f6',
+                pointBorderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                scales: {
+                    r: {
+                        min: 0,
+                        max: 20,
+                        ticks: {
+                            stepSize: 5,
+                            backdropColor: "transparent",
+                            color: "white"
+                        },
+                        grid: {
+                            color: "#334155"
+                        },
+                        angleLines: {
+                            color: "#334155"
+                        },
+                        pointLabels: {
+                            color: "white",
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: "white"
+                        }
+                    }
+                }
+            }
+            });
+        </script>
+
+        {% endif %}
+
+        <footer style="margin-top:40px; text-align:center; opacity:0.6;">
+            Built by Chitra Madarakhandi | AI-Powered GitHub Evaluation System
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

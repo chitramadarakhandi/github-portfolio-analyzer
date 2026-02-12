@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GitHub Portfolio Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <h1>🚀 GitHub Portfolio Analyzer & Enhancer</h1>
+
+        <div class="card">
+            <form method="post" action="/analyze">
+                <input type="text" name="github_username" placeholder="Enter GitHub Username (e.g. torvalds)" required>
+                <button type="submit">Analyze Profile</button>
+            </form>
+        </div>
+
+        {% if result %}
+        <div class="card">
+            <h2>Portfolio Score: {{ result.total_score }}/100</h2>
+
+            <h3>📊 Score Breakdown</h3>
+            <ul>
+                {% for key, value in result.breakdown.items() %}
+                <li>{{ key }} : {{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🤖 AI Recruiter Evaluation</h3>
+            <pre style="white-space: pre-wrap;">{{ ai_feedback }}</pre>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
