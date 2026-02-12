@@ -3,4 +3,5 @@ uvicorn
 requests
 jinja2
 python-multipart
+itsdangerous
 openai
