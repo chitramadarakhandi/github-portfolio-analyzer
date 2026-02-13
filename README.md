@@ -71,6 +71,8 @@ AI Feedback Module
 
 Dashboard UI
 
+---
+
 ## 🚀 How to Run Locally
 
 Follow these steps to run the project on your local machine:
