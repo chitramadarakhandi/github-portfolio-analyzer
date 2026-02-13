@@ -57,13 +57,18 @@ This project bridges that gap by converting raw GitHub activity into structured 
 
 🏗️ System Architecture
 
-User → FastAPI Backend → GitHub API
+User  →  FastAPI Backend  →  GitHub API
 
 ↓
+
 Scoring Engine
+
 ↓
+
 AI Feedback Module
+
 ↓
+
 Dashboard UI
 
 ## 🚀 How to Run Locally
