@@ -12,6 +12,7 @@ An AI-powered system that evaluates GitHub profiles the way recruiters do — by
 ---
 
 ## 📸 Preview
+![Login page](screenshots/login.png)
 
 ### 🖥️ Dashboard Overview
 ![Dashboard](screenshots/dashboard.png)
@@ -72,6 +73,11 @@ source venv/bin/activate
 
 3.Run the Application
 uvicorn main:app --reload
+
+4. i/p example
+input should be git profile url
+(ex; https://github.com/username)
+if the url as shown in the example then only tool will analyze evrything
 
 --------------------------------
 
