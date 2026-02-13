@@ -18,7 +18,8 @@ templates = Jinja2Templates(directory="templates")
 
 GITHUB_API = "https://api.github.com/users/"
 
-app.mount("/static", StaticFiles(directory="static"), name="static")  #need to add this line to serve static files like CSS and JS
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 # ---------------- LOGIN PAGE ---------------- #
 
@@ -26,18 +27,19 @@ app.mount("/static", StaticFiles(directory="static"), name="static")  #need to a
 def login_page(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
+
 @app.post("/login")
 def login(request: Request, username: str = Form(...), password: str = Form(...)):
 
-    # Simple mock login
     if username == "admin" and password == "admin123":
         request.session["user"] = username
         return RedirectResponse("/dashboard", status_code=302)
-    
+
     return templates.TemplateResponse("login.html", {
         "request": request,
         "error": "Invalid Credentials"
     })
+
 
 # ---------------- DASHBOARD ---------------- #
 
@@ -49,13 +51,31 @@ def dashboard(request: Request):
 
     return templates.TemplateResponse("dashboard.html", {"request": request})
 
+
 # ---------------- ANALYZE ---------------- #
 
 @app.post("/analyze", response_class=HTMLResponse)
-def analyze(request: Request, github_username: str = Form(...)):
+def analyze(request: Request, github_url: str = Form(...)):
 
     if "user" not in request.session:
         return RedirectResponse("/", status_code=302)
+
+    # -------- Extract username from URL --------
+    try:
+        if "github.com/" not in github_url:
+            raise ValueError()
+
+        github_url = github_url.split("?")[0]  # remove query params
+        github_username = github_url.rstrip("/").split("/")[-1]
+
+        if not github_username:
+            raise ValueError()
+
+    except Exception:
+        return templates.TemplateResponse("dashboard.html", {
+            "request": request,
+            "error": "Please enter a valid GitHub profile URL (e.g. https://github.com/username)"
+        })
 
     user_url = GITHUB_API + github_username
     repo_url = user_url + "/repos"
@@ -65,7 +85,7 @@ def analyze(request: Request, github_username: str = Form(...)):
     headers = {}
     if github_token:
         headers = {
-            "Authorization": f"Bearer {github_token}"
+            "Authorization": f"token {github_token}"
         }
 
     user_response = requests.get(user_url, headers=headers)
@@ -100,4 +120,3 @@ def analyze(request: Request, github_username: str = Form(...)):
         "result": score_data,
         "ai_feedback": ai_feedback
     })
-

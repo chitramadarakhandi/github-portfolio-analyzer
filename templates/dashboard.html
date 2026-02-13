@@ -4,21 +4,19 @@
 <head>
     <title>Dashboard - GitHub Analyzer</title>
     <link rel="stylesheet" href="/static/style.css">
-
-    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-
     <div class="dashboard">
 
         <h1>GitHub Portfolio Analyzer Dashboard</h1>
 
-        <!-- Input Card -->
+        <!-- Input -->
         <div class="card">
             <form method="post" action="/analyze">
-                <input type="text" name="github_username" placeholder="Enter GitHub Username (e.g. torvalds)" required>
+                <input type="url" name="github_url"
+                    placeholder="Enter GitHub Profile URL (e.g. https://github.com/torvalds)" required>
                 <button type="submit">Analyze Profile</button>
             </form>
         </div>
@@ -30,16 +28,12 @@
         {% endif %}
 
         {% if result %}
-        <!-- Score Card -->
         <div class="card">
             <h2>Portfolio Score: {{ result.total_score }}/100</h2>
 
-            <!-- Progress Bar -->
             <div class="progress-container">
                 <div class="progress-bar" style="width: {{ result.total_score }}%;">
-                    <span class="progress-text">
-                        {{ result.total_score }}%
-                    </span>
+                    <span class="progress-text">{{ result.total_score }}%</span>
                 </div>
             </div>
 
@@ -50,22 +44,37 @@
                 {% endfor %}
             </ul>
 
-            <!-- Radar Chart -->
             <div class="chart-container">
                 <canvas id="scoreChart"></canvas>
             </div>
-            
         </div>
 
-        <!-- AI Feedback -->
+        <!-- Structured AI Feedback -->
         <div class="card">
             <h3>AI Recruiter Evaluation</h3>
-            <div>
-                {{ ai_feedback | safe }}
-            </div>
+
+            <h4 style="color:#22c55e;">🟢 Strengths</h4>
+            <ul>
+                {% for item in ai_feedback.strengths %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+
+            <h4 style="color:#ef4444;">🔴 Weaknesses</h4>
+            <ul>
+                {% for item in ai_feedback.weaknesses %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+
+            <h4 style="color:#3b82f6;">🛠 Improvement Plan</h4>
+            <ul>
+                {% for item in ai_feedback.suggestions %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
         </div>
 
-        <!-- Chart Script -->
         <script>
             const ctx = document.getElementById('scoreChart');
 
@@ -74,61 +83,33 @@
                 data: {
                     labels: [
                         {% for key in result.breakdown.keys() %}
-                            "{{ key }}",
-                        {% endfor %}
-                    ],
+                    "{{ key }}",
+                    {% endfor %}
+                ],
                 datasets: [{
                     label: 'Portfolio Analysis',
                     data: [
                         {% for value in result.breakdown.values() %}
-                                {{ value }},
+                        {{ value }},
                 {% endfor %}
             ],
                 fill: true,
-                backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                borderColor: '#3b82f6',
-                pointBackgroundColor: '#3b82f6',
-                pointBorderColor: '#ffffff'
-                    }]
-                },
+                backgroundColor: 'rgba(59,130,246,0.2)',
+                borderColor: '#3b82f6'
+                }]
+            },
                 options: {
                 responsive: true,
                 maintainAspectRatio: false,
-
                 scales: {
                     r: {
                         min: 0,
-                        max: 20,
-                        ticks: {
-                            stepSize: 5,
-                            backdropColor: "transparent",
-                            color: "white"
-                        },
-                        grid: {
-                            color: "#334155"
-                        },
-                        angleLines: {
-                            color: "#334155"
-                        },
-                        pointLabels: {
-                            color: "white",
-                            font: {
-                                size: 12
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: "white"
-                        }
+                        max: 20
                     }
                 }
             }
-            });
+        });
         </script>
-
         {% endif %}
 
         <footer style="margin-top:40px; text-align:center; opacity:0.6;">
@@ -136,7 +117,6 @@
         </footer>
 
     </div>
-
 </body>
 
 </html>

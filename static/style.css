@@ -85,15 +85,10 @@ button:hover {
 }
 
 .chart-container {
-    width: 450px;
-    /* medium width */
-    height: 450px;
-    /* medium height */
+    width: 420px;
+    height: 350px;
     margin: 30px auto;
-    /* center the graph */
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 12px;
+    position: relative;
 }
 
 .chart-container canvas {
