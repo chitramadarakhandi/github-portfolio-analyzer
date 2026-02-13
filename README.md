@@ -17,10 +17,10 @@ An AI-powered system that evaluates GitHub profiles the way recruiters do — by
 ![Dashboard](screenshots/dashboard.png)
 
 ### 📊 Radar Chart Visualization
-![Radar Chart_&_Score](screenshots/score_graph_analyzer.png)
+![Radar Chart_&_Score](screenshots/score_graph_analyze.png)
 
 ### 🤖 AI Recruiter Feedback
-![AI Feedback](screenshots/recriter_evaluation.png)
+![AI Feedback](screenshots/AI_Recruiter.png)
 
 ### 🚀github-portfolio-analyzer output
 ![Result](screenshots/output.png)
