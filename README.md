@@ -58,6 +58,7 @@ This project bridges that gap by converting raw GitHub activity into structured 
 🏗️ System Architecture
 
 User → FastAPI Backend → GitHub API
+
 ↓
 Scoring Engine
 ↓
