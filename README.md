@@ -76,8 +76,8 @@ uvicorn main:app --reload
 
 4. i/p example
 input should be git profile url
-(ex; https://github.com/username)
-if the url as shown in the example then only tool will analyze evrything
+(ex: https://github.com/username)
+-->if the url as shown in the example then only tool will analyze evrything
 
 --------------------------------
 
