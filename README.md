@@ -59,6 +59,7 @@ This project bridges that gap by converting raw GitHub activity into structured 
 
 Follow these steps to run the project on your local machine:
 
+
 ### 1️. Clone the Repository
 
 ```bash
@@ -83,5 +84,6 @@ input should be git profile url
 -->if the url as shown in the example then only tool will analyze evrything
 
 --------------------------------
+
 
 
