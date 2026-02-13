@@ -55,30 +55,40 @@ This project bridges that gap by converting raw GitHub activity into structured 
 
 ---
 
+🏗️ System Architecture
+
+User → FastAPI Backend → GitHub API
+↓
+Scoring Engine
+↓
+AI Feedback Module
+↓
+Dashboard UI
+
 ## 🚀 How to Run Locally
 
 Follow these steps to run the project on your local machine:
 
 
-### 1️. Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/chitramadarakhandi/github-portfolio-analyzer.git
 cd github-portfolio-analyzer
 
-2️.Create Virtual Environment
+==>Create Virtual Environment
 python -m venv venv
 
-Windows:
+**Windows:
 venv\Scripts\activate
 
-Mac/Linux:
+**Mac/Linux:
 source venv/bin/activate
 
-3.Run the Application
+==>Run the Application
 uvicorn main:app --reload
 
-4. i/p example
+==>I/O example
 input should be git profile url
 (ex: https://github.com/username)
 -->if the url as shown in the example then only tool will analyze evrything
