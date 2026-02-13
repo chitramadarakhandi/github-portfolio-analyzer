@@ -9,6 +9,9 @@ An AI-powered system that evaluates GitHub profiles the way recruiters do — by
 
 ⚠️ Free-tier hosting may take 20–30 seconds to wake up.
 
+##🌐 Demo_vedio_link
+👉 https://drive.google.com/drive/folders/1wu7OSe8rcWxbqRu10qNRWGnJ9HGLE7Tc
+
 ---
 
 ## 📸 Preview
